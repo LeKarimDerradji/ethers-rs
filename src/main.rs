@@ -7,12 +7,24 @@ use ethers::{
 
 use tokio;
 
+use dotenv::dotenv;
+
 #[tokio::main]
 async fn main() {
-    // Create a provider for connecting to the Ethereum network
-    let provider =
-        Provider::<Http>::try_from("https://mainnet.infura.io/v3/bfecac101c384372945929d0ca759859")
-            .unwrap();
+    // Load environment variables from the .env file
+    dotenv().ok();
+
+    // Get the value of the "MY_VAR" environment variable
+    let infura_api_key = std::env::var("INFURA_API_KEY").unwrap_or("default value".to_string());
+
+    println!("INFURA_API_KEY = {}", infura_api_key);
+    // Concatenate the API key to the API string
+    let api_string = format!("https://mainnet.infura.io/v3/{}", infura_api_key);
+
+    /*
+    Create a provider for connecting to the Ethereum network
+    */
+    let provider = Provider::<Http>::try_from(api_string.as_str()).unwrap();
 
     // Get the balance of an Ethereum address
     let address_slice =

@@ -1,11 +1,8 @@
 use ethers::{
-    contract::{Contract, ContractFactory},
     core::utils::format_ether,
     prelude::*,
     providers::{Http, Provider},
 };
-
-use tokio;
 
 use dotenv::dotenv;
 
@@ -15,9 +12,9 @@ async fn main() {
     dotenv().ok();
 
     // Get the value of the "INFURA_API_KEY" environment variable
-    let infura_api_key = std::env::var("INFURA_API_KEY").unwrap_or("default value".to_string());
+    let infura_api_key = std::env::var("INFURA_API_KEY").unwrap_or_else(|_| "default value".to_string());
     println!("INFURA_API_KEY = {}", infura_api_key);
-    
+
     // Concatenate the API key to the API string
     let api_string = format!("https://mainnet.infura.io/v3/{}", infura_api_key);
 

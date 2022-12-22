@@ -34,7 +34,7 @@ async fn main() {
 
     let balance = providermod::get_balance_mod(address);
 
-    match balance {
+    match balance.await {
         Ok(balance) => println!("Balance: {}", format_ether(balance)),
         Err(error) => println!("Error: {}", error),
     }

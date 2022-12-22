@@ -6,6 +6,10 @@ use ethers::{
 
 use dotenv::dotenv;
 
+use crate::provider::providermod;
+
+mod provider;
+
 #[tokio::main]
 async fn main() {
     // Load environment variables from the .env file
@@ -28,8 +32,7 @@ async fn main() {
         b"\xd8\xdA\x6B\xF2\x69\x64\xaf\x9D\x7e\xEd\x9e\x03\xE5\x34\x15\xD3\x7a\xA9\x60\x45";
     let address = Address::from_slice(address_slice);
 
-    let balance_future = provider.get_balance(address, None);
-    let balance = balance_future.await;
+    let balance = providermod::get_balance_mod(address);
 
     match balance {
         Ok(balance) => println!("Balance: {}", format_ether(balance)),
